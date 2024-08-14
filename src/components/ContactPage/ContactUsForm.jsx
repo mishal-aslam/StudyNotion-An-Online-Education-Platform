@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { motion } from "framer-motion";
 
 import CountryCode from "../../data/countrycode.json"
 import { apiConnector } from "../../services/apiconnector"
@@ -43,8 +44,24 @@ const ContactUsForm = () => {
     }
   }, [reset, isSubmitSuccessful])
 
+  const boxVariant = {
+    scale: { 
+      scale: 1, 
+      transition: { duration: 1.2 } 
+    },
+    initial: { 
+      scale: 0.5
+    }
+  };
+     
+
   return (
-    <form
+    <motion.form
+    variants={boxVariant}
+    initial="initial"
+    whileInView="scale"
+    viewport={{ once: true, amount: 0.5, direction: 'down' }}
+    transition={{ duration: 0.5 }}
       className="flex flex-col gap-7"
       onSubmit={handleSubmit(submitContactForm)}
     >
@@ -181,7 +198,7 @@ const ContactUsForm = () => {
       >
         Send Message
       </button>
-    </form>
+    </motion.form>
   )
 }
 

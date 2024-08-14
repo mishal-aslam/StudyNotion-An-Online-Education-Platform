@@ -1,9 +1,25 @@
 import React from 'react'
 import HighlightText from '../HomePage/HighlightText'
+import { motion } from "framer-motion";
+
+const boxVariant2 = {
+  scale: { 
+    scale: 1, 
+    transition: { duration: 1.2 } 
+  },
+  initial: { 
+    scale: 0.5
+  }
+};
 
 const Quote = () => {
   return (
-    <div className=" text-xl md:text-4xl font-semibold mx-auto py-5 pb-20 text-center text-white">
+    <motion.div 
+    variants={boxVariant2}
+    initial="initial"
+    whileInView="scale"
+    viewport={{ once: true, amount: 0.5, direction: 'down' }}
+     className=" text-xl md:text-4xl font-semibold mx-auto py-5 pb-20 text-center text-white">
         We are passionate about revolutionizing the way we learn. Our
         innovative platform <HighlightText text={"combines technology"} />,{" "}
         <span className="bg-gradient-to-b from-[#FF512F] to-[#F09819] text-transparent bg-clip-text font-bold">
@@ -16,7 +32,7 @@ const Quote = () => {
             unparalleled educational
         experience.
         </span> 
-    </div>
+    </motion.div>
   )
 }
 

@@ -4,11 +4,27 @@ import CTAButton from "../../../components/core/HomePage/Button";
 import Know_your_progress from "../../../assets/Images/Know_your_progress.png";
 import Compare_with_others from "../../../assets/Images/Compare_with_others.svg";
 import Plan_your_lessons from "../../../assets/Images/Plan_your_lessons.svg";
+import { motion } from "framer-motion";
+
+const boxVariant2 = {
+  scale: { 
+    scale: 1, 
+    transition: { duration: 1.2 } 
+  },
+  initial: { 
+    scale: 0.5
+  }
+};
 
 const LearningLanguageSection = () => {
   return (
     <div>
-        <div className="text-4xl font-semibold text-center my-10">
+        <motion.div 
+             variants={boxVariant2}
+             initial="initial"
+             whileInView="scale"
+             viewport={{ once: true, amount: 0.5, direction: 'down' }}
+              className="text-4xl font-semibold text-center my-10">
             Your swiss knife for
             <HighlightText text={"learning any language"} />
             <div className="text-center text-richblack-700 font-medium lg:w-[75%] mx-auto leading-6 text-base mt-3">
@@ -33,7 +49,7 @@ const LearningLanguageSection = () => {
                 className="object-contain  lg:-ml-36 lg:-mt-5 -mt-16"
               />
             </div>
-          </div>
+          </motion.div>
 
           <div className="w-fit mx-auto lg:mb-20 mb-8 -mt-5">
             <CTAButton active={true} linkto={"/signup"}>

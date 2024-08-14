@@ -3,10 +3,28 @@ import React from "react";
 // Importing React Icons
 import { HiUsers } from "react-icons/hi";
 import { ImTree } from "react-icons/im";
+// framer motion 
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+const boxVariant2 = {
+  scale: { 
+    scale: 1, 
+    transition: { duration: 1.2 } 
+  },
+  initial: { 
+    scale: 0
+  }
+};
 
 const CourseCard = ({cardData, currentCard, setCurrentCard}) => {
   return (
-    <div
+    <motion.div
+    variants={boxVariant2}
+  initial="initial"
+  whileInView="scale"
+  viewport={{ once: true, amount: 0.5, direction: 'down' }}
+  
       className={`w-[360px] lg:w-[30%] ${
         currentCard === cardData?.heading
           ? "bg-white shadow-[12px_12px_0_0] shadow-yellow-50"
@@ -43,7 +61,7 @@ const CourseCard = ({cardData, currentCard, setCurrentCard}) => {
           <p>{cardData?.lessionNumber} Lession</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

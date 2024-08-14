@@ -1,7 +1,50 @@
 import React from "react";
 import HighlightText from "../../../components/core/HomePage/HighlightText";
 import CTAButton from "../../../components/core/HomePage/Button";
+// framer motion 
+import { motion } from "framer-motion";
 
+const wineVariant = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 1.2,
+      ease: "easeOut",
+    },
+  },
+};
+
+const wineSlideVariant = {
+  hidden: {
+    opacity: 0,
+    x: -100,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 1.5,
+      ease: "easeOut",
+    },
+  },
+};
+   
+const boxVariant2 = {
+  scale: {
+    scale: 1,
+    transition: { duration: 1.2 },
+  },
+  initial: {
+    scale: 0.5,
+  },
+};
 const LearningGridArray = [
   {
     order: -1,
@@ -49,8 +92,12 @@ const LearningGrid = () => {
     <div className="grid mx-auto w-[350px] xl:w-fit grid-cols-1 xl:grid-cols-4 mb-12">
       {LearningGridArray.map((card, i) => {
         return (
-          <div
+          <motion.div
             key={i}
+            variants={wineVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5, direction: 'horizontal' }}
             className={`${i === 0 && "xl:col-span-2 xl:h-[294px]"}  ${
               card.order % 2 === 1
                 ? "bg-richblack-700 h-[294px]"
@@ -60,7 +107,13 @@ const LearningGrid = () => {
             } ${card.order === 3 && "xl:col-start-2"}  `}
           >
             {card.order < 0 ? (
-              <div className="xl:w-[90%] flex flex-col gap-3 pb-10 xl:pb-0">
+              <motion.div
+                variants={wineSlideVariant}
+                initial="hidden"
+                whileInView="visible"
+               viewport={{ once: true, amount: 0.5, direction: 'horizontal' }}
+                className="xl:w-[90%] flex flex-col gap-3 pb-10 xl:pb-0"
+              >
                 <div className="text-4xl font-semibold ">
                   {card.heading}
                   <HighlightText text={card.highlightText} />
@@ -74,17 +127,23 @@ const LearningGrid = () => {
                     {card.BtnText}
                   </CTAButton>
                 </div>
-              </div>
+              </motion.div>
             ) : (
-              <div className="p-8 flex flex-col gap-8">
+              <motion.div
+                  variants={boxVariant2}
+            initial="initial"
+            whileInView="scale"
+            viewport={{ once: true, amount: 0.5, direction: 'horizontal' }}
+                className="p-8 flex flex-col gap-8"
+              >
                 <h1 className="text-richblack-5 text-lg">{card.heading}</h1>
 
                 <p className="text-richblack-300 font-medium">
                   {card.description}
                 </p>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         );
       })}
     </div>

@@ -3,19 +3,42 @@ import CTAButton from "../../../components/core/HomePage/Button";
 import { FaArrowRight } from "react-icons/fa";
 import Instructor from "../../../assets/Images/Instructor.png";
 import HighlightText from './HighlightText';
+import { motion } from "framer-motion";
 
+const boxVariant2 = {
+  scale: { 
+    scale: 1, 
+    transition: { duration: 1.2 } 
+  },
+  initial: { 
+    scale: 0.5
+  }
+};
+   
 const InstructorSection = () => {
   return (
     <div>
         <div className="flex flex-col lg:flex-row gap-20 items-center">
-          <div className="lg:w-[50%]">
+          <motion.div 
+          variants={boxVariant2}
+          initial="initial"
+          whileInView="scale"
+          viewport={{ once: true, amount: 0.5, direction: 'down' }}
+          className="lg:w-[50%]">
             <img
               src={Instructor}
               alt=""
               className="shadow-white shadow-[-20px_-20px_0_0]"
             />
-          </div>
-          <div className="lg:w-[50%] flex gap-10 flex-col">
+          </motion.div>
+
+
+          <motion.div
+           variants={boxVariant2}
+           initial="initial"
+           whileInView="scale"
+           viewport={{ once: true, amount: 0.5, direction: 'down' }}
+           className="lg:w-[50%] flex gap-10 flex-col">
             <h1 className="lg:w-[50%] text-4xl font-semibold ">
               Become an
               <HighlightText text={"instructor"} />
@@ -35,7 +58,7 @@ const InstructorSection = () => {
                 </div>
               </CTAButton>
             </div>
-          </div>
+          </motion.div>
         </div>
     </div>
   )
