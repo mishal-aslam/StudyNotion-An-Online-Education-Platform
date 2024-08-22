@@ -51,12 +51,27 @@ function Navbar() {
 
   
   return (
+  //   <div
+  //   className={`flex items-center justify-center border-b-[1px]  mt-6 mb-12 ${
+  //     location.pathname !== "/" ? "bg-richblack-800" : ""
+  //   } transition-all duration-200 ${
+  //     scrolled ? "max-w-xs" : "max-w-maxContent"
+  //   }`}
+  // >
     <div
       className={`flex items-center justify-center border-b-[1px]  mt-6 mb-12 ${
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200`}
     >
-      <div className="border-richblack-700 border-2  h-20 mt-20 px-6 mx-24 rounded-2xl bg-richblack-800 flex w-11/12 fixed z-50  max-w-maxContent items-center justify-between">
+
+
+<div
+  className={` items-center justify-between border-richblack-700 border-2   mt-20 px-6 rounded-2xl bg-richblack-800 flex ${
+    scrolled ? "w-7/12 h-16"  : "w-11/12 h-20"  
+  }  fixed z-50 transition-all duration-200`}
+>
+
+
         {/* Logo */}
         <Link to="/">
           <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
