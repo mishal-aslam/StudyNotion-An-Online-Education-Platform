@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react"
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
-import { BsChevronDown } from "react-icons/bs"
-import { useSelector } from "react-redux"
-import { Link, matchPath, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { AiOutlineMenu, AiOutlineShoppingCart, AiOutlineClose } from "react-icons/ai";
+import { BsChevronDown } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { Link, matchPath, useLocation } from "react-router-dom";
 
-import logo from "../../assets/Logo/Logo-Full-Light.png"
-import { NavbarLinks } from "../../data/navbar-links"
-import { apiConnector } from "../../services/apiconnector"
-import { categories } from "../../services/apis"
-import { ACCOUNT_TYPE } from "../../utils/constants"
-import ProfileDropdown from "../core/Auth/ProfileDropDown"
+import logo from "../../assets/Logo/Logo-Full-Light.png";
+import { NavbarLinks } from "../../data/navbar-links";
+import { apiConnector } from "../../services/apiconnector";
+import { categories } from "../../services/apis";
+import { ACCOUNT_TYPE } from "../../utils/constants";
+import ProfileDropdown from "../core/Auth/ProfileDropDown";
 
 function Navbar() {
-  const { token } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile)
-  const { totalItems } = useSelector((state) => state.cart)
-  const location = useLocation()
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const { totalItems } = useSelector((state) => state.cart);
+  const location = useLocation();
 
-  const [subLinks, setSubLinks] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [subLinks, setSubLinks] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // New state for menu toggle
 
   useEffect(() => {
     (async () => {
@@ -49,34 +50,24 @@ function Navbar() {
     return matchPath({ path: route }, location.pathname);
   };
 
-  
   return (
-  //   <div
-  //   className={`flex items-center justify-center border-b-[1px]  mt-6 mb-12 ${
-  //     location.pathname !== "/" ? "bg-richblack-800" : ""
-  //   } transition-all duration-200 ${
-  //     scrolled ? "max-w-xs" : "max-w-maxContent"
-  //   }`}
-  // >
     <div
       className={`flex items-center justify-center border-b-[1px]  mt-6 mb-12 ${
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200`}
     >
-
-
-<div
-  className={` items-center justify-between border-richblack-700 border-2   mt-20 px-6 rounded-2xl bg-richblack-800 flex ${
-    scrolled ? "w-7/12 h-16"  : "w-11/12 h-20"  
-  }  fixed z-50 transition-all duration-200`}
->
-
-
+      <div
+        className={` items-center justify-between border-richblack-700 border-2   px-6 rounded-2xl bg-richblack-800 flex ${
+          scrolled ? "md:w-7/12 md:mt-20 mt-8 md:h-16 w-full h-20 " 
+          : "md:mt-20 mt-8 md:w-11/12 md:h-20  w-full h-20"
+        }  fixed z-50 transition-all duration-200`}
+      >
         {/* Logo */}
         <Link to="/">
           <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
         </Link>
-        {/* Navigation links */}
+
+        {/* Navigation links for desktop */}
         <nav className="hidden md:block">
           <ul className="flex gap-x-6 text-richblack-25">
             {NavbarLinks.map((link, index) => (
@@ -96,7 +87,7 @@ function Navbar() {
                         <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
                         {loading ? (
                           <p className="text-center">Loading...</p>
-                        ) : (subLinks && subLinks.length) ? (
+                        ) : subLinks && subLinks.length ? (
                           <>
                             {subLinks
                               ?.filter(
@@ -138,6 +129,7 @@ function Navbar() {
             ))}
           </ul>
         </nav>
+
         {/* Login / Signup / Dashboard */}
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
@@ -166,12 +158,37 @@ function Navbar() {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
-        <button className="mr-4 md:hidden">
-          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+
+        {/* Mobile menu icon */}
+        <button className="mr-4 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? (
+            <AiOutlineClose fontSize={24} fill="#AFB2BF" />
+          ) : (
+            <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+          )}
         </button>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {menuOpen && (
+        <div className="fixed top-16  w-[90%] h-[60%] bg- rounded-2xl text-[#8b8ea1] bg-[#222733] mt-12 z-40 flex flex-col items-center">
+          <ul className="flex flex-col mt-20 gap-6 text-center">
+            {NavbarLinks.map((link, index) => (
+              <li key={index}>
+                <Link
+                  to={link.path}
+                  className="text-2xl"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
