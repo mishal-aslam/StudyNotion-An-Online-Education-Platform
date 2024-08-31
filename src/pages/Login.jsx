@@ -3,13 +3,10 @@ import Template from "../components/core/Auth/Template"
 
 function Login() {
   return (
-    <Template
-      title="Welcome Back"
-      description1="Build skills for today, tomorrow, and beyond."
-      description2="Education to future-proof your career."
-      image={loginImg}
-      formType="login"
-    />
+<div className="bg-white">
+  <h1 className="bg-richblack-300 p-4">wefdwf</h1>
+  <h1 className="bg-richblack-500 p-5" >ewqfwe</h1>
+</div>
   )
 }
 
